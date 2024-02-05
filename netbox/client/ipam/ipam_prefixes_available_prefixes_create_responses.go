@@ -23,6 +23,7 @@ package ipam
 import (
 	"fmt"
 	"io"
+	"encoding/json"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
@@ -66,8 +67,38 @@ IpamPrefixesAvailablePrefixesCreateCreated describes a response with status code
 
 IpamPrefixesAvailablePrefixesCreateCreated ipam prefixes available prefixes create created
 */
+
+type PrefixPayloadPlaceholder []*models.Prefix
+
 type IpamPrefixesAvailablePrefixesCreateCreated struct {
-	Payload []*models.Prefix
+	Payload PrefixPayloadPlaceholder
+}
+
+
+func (o *PrefixPayloadPlaceholder) UnmarshalJSON(p []byte) error {
+	if string(p) == "null" {
+		return nil
+	}
+
+	tmpSingle := &models.Prefix{}
+
+	if err := json.Unmarshal(p, tmpSingle); err == nil {
+		p := PrefixPayloadPlaceholder([]*models.Prefix{ tmpSingle })
+		*o = p
+
+		return nil
+	}
+
+	tmpArr := []*models.Prefix{}
+
+	if err := json.Unmarshal(p, &tmpArr); err == nil {
+		p := PrefixPayloadPlaceholder(tmpArr)
+		*o = p
+
+		return nil
+	}
+
+	return fmt.Errorf("failed unmarshalling %q", string(p))
 }
 
 // IsSuccess returns true when this ipam prefixes available prefixes create created response has a 2xx status code
