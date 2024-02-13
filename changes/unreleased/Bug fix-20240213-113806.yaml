@@ -1,6 +1,0 @@
-kind: Bug fix
-body: fix another unmrashal
-time: 2024-02-13T11:38:06.526809+01:00
-custom:
-  JiraID: "34832"
-  PR: "4"
