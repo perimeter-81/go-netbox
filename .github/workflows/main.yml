@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.ACTIONS_RUNNER }}
     strategy:
       fail-fast: false
       matrix:
