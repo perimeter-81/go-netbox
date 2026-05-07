@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.ACTIONS_RUNNER }}
     strategy:
       fail-fast: false
       matrix:
@@ -43,3 +43,11 @@ jobs:
 
       - name: Test
         run: go test -v ./...
+
+      - name: Push metrics
+        if: always()
+        continue-on-error: true
+        uses: perimeter-81/actions/actions/monitoring/push_metrics@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
