@@ -43,11 +43,3 @@ jobs:
 
       - name: Test
         run: go test -v ./...
-
-      - name: Push metrics
-        if: always()
-        continue-on-error: true
-        uses: perimeter-81/actions/actions/monitoring/push_metrics@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
